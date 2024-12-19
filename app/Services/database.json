@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1,
+        "nombre": "Dr. Luis García",
+        "especialidad": "Neurología"
+    },
+    {
+        "id": 2,
+        "nombre": "Dra. Ana López",
+        "especialidad": "Pediatría"
+    },
+    {
+        "id": 3,
+        "nombre": "Dr. Juan Pérez",
+        "especialidad": "Cardiología"
+    }
+]

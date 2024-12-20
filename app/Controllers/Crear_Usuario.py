@@ -1,25 +1,19 @@
 from fastapi import HTTPException
-from app.Models.models import Medico
-from app.Models.schemas import MedicoSchema
-
-# Base de datos simulada
-medicos_base = [  {"id": 3, "nombre": "Dr. Juan Pérez", "especialidad": "Cardiología"},
-            {"id": 2, "nombre": "Dra. Ana López", "especialidad": "Pediatría"},
-            {"id": 1, "nombre": "Dr. Luis García", "especialidad": "Neurología"},]  
-
+from app.Controllers.obtener_medico import Obtener_Infor_Medicos
+ 
 class Crear_Medicos:
-    # Usamos el decorador @staticmethod ya que no necesitamos crear una instancia
-    def llenar_medicos():
-        medicos_por_defecto = [
-            {"id": 3, "nombre": "Dr. Juan Pérez", "especialidad": "Cardiología"},
-            {"id": 2, "nombre": "Dra. Ana López", "especialidad": "Pediatría"},
-            {"id": 1, "nombre": "Dr. Luis García", "especialidad": "Neurología"},
-        ]
+    
+    def llenar_medicos(nuevo_usuario): 
+        instancia_clase = Obtener_Infor_Medicos()
         
-        for medico_data in medicos_por_defecto:
-            # Creación de un nuevo médico usando la clase Medico
-            nuevo_medico = Medico(**medico_data)
-            medicos_base.append(nuevo_medico)  # Agregarlo a la base de datos simulada
-            print(nuevo_medico)  # Imprimir para ver en consola el médico añadido
-
+        instancia_de_usuario =instancia_clase.ObtenerTodosLosMedicos()
+        print (instancia_de_usuario)
+        if not isinstance(instancia_de_usuario, list):
+            raise HTTPException(status_code=500, detail="Los datos de médicos no son una lista válida")
+        
+        nuevo_usuario = nuevo_usuario.dict()
+        
+        instancia_de_usuario.append(nuevo_usuario)
+        instancia_clase.write_medico(instancia_de_usuario)
         return {"mensaje": "Datos de médicos añadidos correctamente"}
+

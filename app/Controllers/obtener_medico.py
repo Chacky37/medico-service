@@ -1,14 +1,21 @@
 from fastapi import HTTPException
-from app.Controllers.Crear_Usuario import Crear_Medicos
-from app.Models.models import Medico
-from app.Models.schemas import MedicoSchema
+#from app.Controllers.Crear_Usuario import Crear_Medicos
+import json, pathlib
 
 class Obtener_Infor_Medicos:
+  __address_file__ = "{0}/app/Services/database.json".format(pathlib.Path().absolute())
   
-  def obtener_medico(id: int):
-    controllers_crear= Crear_Medicos()
-    for medico in controllers_crear.medicos_base:
-        if medico.id == id:
-            print(medico)
-            return medico
-    raise HTTPException(status_code=404, detail="Médico no encontrado")
+  def ObtenerTodosLosMedicos(self):
+   with open(self.__address_file__, "r") as leer:
+     return json.loads(leer.read())
+  
+  def write_medico(self, new_data):
+   with open(self.__address_file__, "w") as escribir:
+    escribir.write(json.dumps(new_data))
+
+
+  
+md = Obtener_Infor_Medicos()
+
+md.ObtenerTodosLosMedicos()
+  
